@@ -72,7 +72,7 @@ let obtenerPreciosSumados =(productos)=>{
 //FUNCIÓN PARA CARGAR DATOS DEL ARRAY VENTAS
 let cargarVentas = (arrVentas) => {
     for(let i = 0; i < arrVentas.length; i++){ 
-        let it = `<tr class="uno">
+        let it = `<tr class="uno" id = "fila">
                     <td class= "eliminar-venta">${arrVentas[i][1].toLocaleDateString()}</td>
                     <td class"eliminar-venta">${arrVentas[i][2]}</td>
                     <td class="tede eliminar-venta">${arrVentas[i][3]}</td>
@@ -91,9 +91,10 @@ cargarVentas(ventas)
 
 
 
+
 let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
 acceptDeleteBtn.addEventListener('click', e =>{
-    console.log(productoEliminarId)
+    //console.log(productoEliminarId)
     let nuevoArrVentas = []
     nuevoArrVentas =  ventas.filter( (item,index) => index != productoEliminarId)
     limpiarTabla();
@@ -101,7 +102,7 @@ acceptDeleteBtn.addEventListener('click', e =>{
     blurContains.style.filter = 'none'
     //modalEliminarVenta.classList.remove('show')
     modalEliminarVenta.classList.add('hide')
-    console.log(modalEliminarVenta)
+    //console.log(modalEliminarVenta)
 
   
 })
@@ -134,27 +135,7 @@ let cargarComponentes = () =>{
 cargarComponentes()
 
 
-/*
-const btnEliminar = document.querySelectorAll('.btn-eliminar-venta');
-const editarVentas = () => {
-    for (let i=0; i < btnEliminar.length; i++) {
-        btnEliminar[i].onclick = () => {
-            let myId = parseInt(btnEliminar[i].id.slice(7)); 
-            console.log(myId)
-            modalEliminarVenta.classList.remove('hide')
-            blurContenedor.style.filter = 'blur(5px)'; 
-        }
-    }
-}
-/*let eliminarVenta = document.querySelector('tr')
 
-eliminarVenta.addEventListener('click',(e)=>{
-    if(e.target.tagName === 'TR'){
-        e.target.remove()
-    }
-})*/
-
-//
 let cantidadVentas = (sucursal) =>{
     let totalVentas = 0
     ventas.filter(venta =>{
@@ -194,6 +175,9 @@ let cargarVendedoras = () =>{
 cargarVendedoras()
 
 let limpiarTabla = () => {
-    table.innerHTML  = ""
+    //let asd = document.querySelector('#t-body')
+       table.innerHTML  = ""
+    
+   
 }
 

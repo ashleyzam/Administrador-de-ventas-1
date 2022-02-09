@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 body{
   font-size: 1em;
   font-family: 'Verdana', sans-serif;
@@ -12,7 +13,7 @@ section {
   align-items: center;
   justify-content: center;
   margin: 0.625em;
-  padding: 3.125em;
+  padding: 3.12em;
 }
 .grid {
   width: 40%;
