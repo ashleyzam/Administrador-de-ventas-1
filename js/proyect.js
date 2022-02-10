@@ -4,7 +4,7 @@ const modalPrincipal = document.querySelector('.containermodal-newSale')
 const close = document.querySelector('.close')
 const selectOption = document.querySelector('.select-option')
 const btnSave = document.querySelector('#btn-save')
-const table = document.querySelector('.col1').getElementsByTagName('tbody')[0]
+const table = document.querySelector('.col1')//.getElementsByTagName('tbody')[0]
 const secondTable = document.querySelector('.table2')
 const sucCentro = document.querySelector('#centro')
 const sucCaballito = document.querySelector('#caballito')
@@ -71,6 +71,22 @@ let obtenerPreciosSumados =(productos)=>{
 
 //FUNCIÓN PARA CARGAR DATOS DEL ARRAY VENTAS
 let cargarVentas = (arrVentas) => {
+    console.log(table)
+    let str = `<tr>
+                    <th>Fecha</th>
+                    <th>Vendedora</th>
+                    <th class="tede">Sucursal</th>
+                    <th class="tede">Componentes</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                    </tr>
+                    <tbody id="t-body">
+
+                    </tbody>`
+
+    let newRow = table.insertRow(table.rows.length);
+    newRow.innerHTML = str;
+
     for(let i = 0; i < arrVentas.length; i++){ 
         let it = `<tr class="uno" id = "fila">
                     <td class= "eliminar-venta">${arrVentas[i][1].toLocaleDateString()}</td>
@@ -85,34 +101,15 @@ let cargarVentas = (arrVentas) => {
         let newRow = table.insertRow(table.rows.length);
                      newRow.innerHTML = it;
     
-    }}
+    }
+}
 
 cargarVentas(ventas)  
 
-
-
-
-let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
-acceptDeleteBtn.addEventListener('click', e =>{
-    //console.log(productoEliminarId)
-    let nuevoArrVentas = []
-    nuevoArrVentas =  ventas.filter( (item,index) => index != productoEliminarId)
-    limpiarTabla();
-    cargarVentas(nuevoArrVentas)
-    blurContains.style.filter = 'none'
-    //modalEliminarVenta.classList.remove('show')
-    modalEliminarVenta.classList.add('hide')
-    //console.log(modalEliminarVenta)
-
-  
-})
-
-
-
-const btnEliminar = document.querySelectorAll('.btn-eliminar-venta')
+var btnEliminar = document.querySelectorAll('.btn-eliminar-venta')
 
 btnEliminar.forEach(item => {
-    item.addEventListener('click', event => {
+        item.addEventListener('click', event => {
         //console.log(item)
         modalEliminarVenta.classList.remove('hide')
         modalEliminarVenta.classList.add('show')
@@ -123,6 +120,24 @@ btnEliminar.forEach(item => {
         })
     
     })
+
+    let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
+    acceptDeleteBtn.addEventListener('click', e =>{
+        //console.log(productoEliminarId)
+        let nuevoArrVentas = []
+        nuevoArrVentas =  ventas.filter( (item,index) => index != productoEliminarId)
+
+        blurContains.style.filter = 'none'
+        //modalEliminarVenta.classList.remove('show')
+        modalEliminarVenta.classList.add('hide')
+        limpiarTabla();
+        cargarVentas(nuevoArrVentas)
+    
+        //console.log(modalEliminarVenta)
+    
+      
+    })
+
 
 const selectComponentes = document.querySelector('.select-componentes')
 let cargarComponentes = () =>{
@@ -167,17 +182,11 @@ let cargarVendedoras = () =>{
 
     }
 }
-    /*selectOption.addEventListener('click',()=>{
-        let selectedOption =  selectOption.value
-        console.log(selectedOption)
-      })*/
+
 
 cargarVendedoras()
 
 let limpiarTabla = () => {
-    //let asd = document.querySelector('#t-body')
-       table.innerHTML  = ""
-    
-   
+    table.innerHTML  = ""
+    // console.log(table)
 }
-
