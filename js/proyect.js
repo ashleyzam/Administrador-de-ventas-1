@@ -135,8 +135,6 @@ let cargarComponentes = () =>{
 }
 cargarComponentes()
 
-
-
 let cantidadVentas = (sucursal) =>{
     let totalVentas = 0
     ventas.filter(venta =>{
