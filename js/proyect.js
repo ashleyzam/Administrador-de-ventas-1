@@ -11,6 +11,7 @@ const sucCaballito = document.querySelector('#caballito')
 const modalEliminarVenta = document.querySelector('.modal-eliminar-venta')
 const blurContains = document.querySelector('#blur-container')
 var productoEliminarId = 0;
+let nuevoArrVentas = []
 
 
 open.addEventListener('click',(e)=>{
@@ -71,80 +72,64 @@ let obtenerPreciosSumados =(productos)=>{
 
 //FUNCIÓN PARA CARGAR DATOS DEL ARRAY VENTAS
 let cargarVentas = (arrVentas) => {
-    console.log(table)
-    let str = `<tr>
-                    <th>Fecha</th>
-                    <th>Vendedora</th>
-                    <th class="tede">Sucursal</th>
-                    <th class="tede">Componentes</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                    </tr>
-                    <tbody id="t-body">
-
-                    </tbody>`
-
+    //console.log(table)
+let str = `<tr>
+            <th>Fecha</th>
+            <th>Vendedora</th>
+            <th class="tede">Sucursal</th>
+            <th class="tede">Componentes</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+            </tr>
+            <tbody id="t-body"></tbody>`
     let newRow = table.insertRow(table.rows.length);
     newRow.innerHTML = str;
 
-    for(let i = 0; i < arrVentas.length; i++){ 
-        let it = `<tr class="uno" id = "fila">
-                    <td class= "eliminar-venta">${arrVentas[i][1].toLocaleDateString()}</td>
-                    <td class"eliminar-venta">${arrVentas[i][2]}</td>
-                    <td class="tede eliminar-venta">${arrVentas[i][3]}</td>
-                    <td class="tede eliminar-venta">${arrVentas[i][4]}</td>
-                    <td class="tede eliminar-venta">${obtenerPreciosSumados(arrVentas[i][4])}</td>
-                    <td><i class="far fa-edit boton-editar" id="editar-" aria-hidden="true"></i>
-                    <i class="far fa-trash-alt btn-eliminar-venta" id="${arrVentas[i][0]-1}"></i></td>
-                    
-                   </tr>`;
-        let newRow = table.insertRow(table.rows.length);
-                     newRow.innerHTML = it;
+for(let i = 0; i < arrVentas.length; i++){ 
+    let it = `<tr class="uno" id = "fila">
+                <td class= "eliminar-venta">${arrVentas[i][1].toLocaleDateString()}</td>
+                <td class"eliminar-venta">${arrVentas[i][2]}</td>
+                <td class="tede eliminar-venta">${arrVentas[i][3]}</td>
+                <td class="tede eliminar-venta">${arrVentas[i][4]}</td>
+                <td class="tede eliminar-venta">${obtenerPreciosSumados(arrVentas[i][4])}</td>
+                <td><i class="far fa-edit boton-editar" id="editar-" aria-hidden="true"></i>
+                <i class="far fa-trash-alt btn-eliminar-venta" onclick="funcDelete(${i})""></i></td>
+             </tr>`;
+    let newRow = table.insertRow(table.rows.length);
+    newRow.innerHTML = it;
     
     }
 }
 
 cargarVentas(ventas)  
 
-var btnEliminar = document.querySelectorAll('.btn-eliminar-venta')
+let funcDelete= (id)=>{
+    modalEliminarVenta.classList.remove('hide')
+    modalEliminarVenta.classList.add('show')
+    blurContains.style.filter = '(5px)'
+    productoEliminarId = id
+}
+let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
 
-btnEliminar.forEach(item => {
-        item.addEventListener('click', event => {
-        //console.log(item)
-        modalEliminarVenta.classList.remove('hide')
-        modalEliminarVenta.classList.add('show')
-        blurContains.style.filter = ' blur(15px)'
-        productoEliminarId = item.getAttribute("id")
-      
-        console.log(productoEliminarId)
-        })
-    
-    })
-
-    let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
-    acceptDeleteBtn.addEventListener('click', e =>{
-        //console.log(productoEliminarId)
-        let nuevoArrVentas = []
+acceptDeleteBtn.addEventListener('click', e =>{
+    if(nuevoArrVentas.length == 0){
         nuevoArrVentas =  ventas.filter( (item,index) => index != productoEliminarId)
+    }else{
+        nuevoArrVentas =  nuevoArrVentas.filter( (item,index) => index != productoEliminarId)
+    }
+       blurContains.style.filter = 'none'
+       modalEliminarVenta.classList.add('hide')
 
-        blurContains.style.filter = 'none'
-        //modalEliminarVenta.classList.remove('show')
-        modalEliminarVenta.classList.add('hide')
-        limpiarTabla();
-        cargarVentas(nuevoArrVentas)
-    
-        //console.log(modalEliminarVenta)
-    
-      
-    })
-
+       limpiarTabla();
+       cargarVentas(nuevoArrVentas)  
+})
 
 const selectComponentes = document.querySelector('.select-componentes')
 let cargarComponentes = () =>{
     for(let i = 0; i < precios.length; i++){
         const listaComponentes = document.createElement('option')
-        listaComponentes.innerText =`${precios[i][0]}`
-        selectComponentes.appendChild(listaComponentes)
+            listaComponentes.innerText =`${precios[i][0]}`
+             selectComponentes.appendChild(listaComponentes)
     }
 }
 cargarComponentes()
@@ -183,10 +168,10 @@ let cargarVendedoras = () =>{
     }
 }
 
-
 cargarVendedoras()
 
 let limpiarTabla = () => {
     table.innerHTML  = ""
     // console.log(table)
+    //cargarVentas()
 }
