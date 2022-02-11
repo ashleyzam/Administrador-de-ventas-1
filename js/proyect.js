@@ -113,6 +113,7 @@ let acceptDeleteBtn = document.querySelector('#btn-accept-deletion')
 
 acceptDeleteBtn.addEventListener('click', e =>{
     if(nuevoArrVentas.length == 0){
+        
         nuevoArrVentas =  ventas.filter( (item,index) => index != productoEliminarId)
     }else{
         nuevoArrVentas =  nuevoArrVentas.filter( (item,index) => index != productoEliminarId)
