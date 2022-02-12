@@ -173,9 +173,10 @@ label{
   display: block;
   font-size: 1em;
   font-family: 'Verdana', sans-serif;
+  margin-top: 10px;
 }
 .select-componentes{
-  width: 400px;
+  width: 350px;
   height: 100px;
 }
 option{
@@ -224,6 +225,7 @@ option{
   height: 10%;
   padding: 0.5em;
   color: #0f3d7c;
+  margin-top: 10px;
   
 }
 input[type=date] {

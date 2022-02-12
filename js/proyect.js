@@ -13,6 +13,8 @@ const modalEliminarVenta = document.querySelector('.modal-eliminar-venta')
 const blurContains = document.querySelector('#blur-container')
 var productoEliminarId = 0;
 let nuevoArrVentas = []
+const selectComponentes = document.querySelector('.select-componentes')
+let selectSucursal = document.querySelector('.single-select')
 
 
 open.addEventListener('click',(e)=>{
@@ -126,7 +128,7 @@ acceptDeleteBtn.addEventListener('click', e =>{
        cargarVentas(nuevoArrVentas)  
 })
 
-const selectComponentes = document.querySelector('.select-componentes')
+
 let cargarComponentes = () =>{
     for(let i = 0; i < precios.length; i++){
         let listaComponentes = document.createElement('option')
@@ -154,65 +156,65 @@ let cargarVendedoras = () =>{
 }
 
 cargarVendedoras()
-let selectSucursal = document.querySelector('.single-select')
+
 let cargarSucursal = () =>{
-    for(let i = 0; i < ventas.length; i++){
+    //for(let i = 0; i < ventas.length; i++){
         let listaSucursal = document.createElement('option')
-        listaSucursal.innerText = `${ventas[i][3]}`
+        let listaSucursal1 = document.createElement('option')
+        listaSucursal.innerText = "Caballito"
+        listaSucursal1.innerText = "Centro"      
         selectSucursal.appendChild(listaSucursal)
-    }
+        selectSucursal.appendChild(listaSucursal1)
+        
+
+    //}
 }
-console.log(cargarSucursal())
+
 cargarSucursal()
 
-let validateSelect = document.querySelector('.seleccionar-componentes')
-let validateInput = document.querySelector('#fecha-nueva-venta')
-let validateVendedoras = document.querySelector('.seleccion-de-vendedoras')
-console.log(validateSelect)
-console.log(validateInput)
-console.log(validateVendedoras)
-let select_1, vendedoras_1, input_1
-btnSave.setAttribute("disabled", "disabled");
 
+let getDate = document.querySelector('#fecha-nueva-venta')
+
+
+//btnSave.setAttribute("disabled", "disabled");
+
+let getDateTime = document.querySelector('#fecha-nueva-venta')
+  
 let saveData = () =>{
-select_1 = validateSelect.value;
-input_1 = validateInput.value
-vendedoras_1 = validateVendedoras.value
-}
-
-let validateAllItems = () =>{
-    //let alerta = "<p>Datos Guardados Correctamente</p>"
-    if(validateSelect.value === select_1.value || validateInput.value === input_1.value  || validateVendedoras.value === vendedoras_1.value){
-        btnSave.removeAttribute('disabled','disabled')
-        
-    }else{
-        btnSave.setAttribute("disabled", "disabled")
-    }
-}
-
-btnSave.addEventListener('submit', (e) =>{
-    e.preventDefault
-    if(validateAllItems()){
-        saveData()
-    }else{
+    let componentes = getSelectComponentValues(selectComponentes)
+    let fecha =  getDateTime.value
+    let vendedora = selectOption.value
+    let sucursal = selectSucursal.value
+    if(validateAllItems(componentes,fecha,vendedora,sucursal)){
         alert('Porfavor, complete todos los campos')
+    }else{    
+        alert(`${componentes}, ${fecha}, ${vendedora} y ${sucursal} han sido guardados correctamente`)    
     }
-
-})
-
-/*
-let limpiar = () =>{
-    for(let i = selectComponentes.length; i>=0; i-- ){
-        selectComponentes.remove(i)
-    }
-}*/
-
-/*
-let changeOption = () =>{
- //console.log(selectComponentes)
- 
 }
-selectComponentes.addEventListener('change', changeOption)*/
+    
+let validateAllItems = (comp,fec,vend,suc) =>{
+     return (comp.length == 0 || fec == ""  || vend == "" || suc == "")
+}
+
+btnSave.addEventListener('click', (e) =>{
+    saveData()
+})
+let getSelectComponentValues = (select) => {
+    let result = [];
+    let options = select && select.options;
+    let opt;
+  
+    for (let i=0 ; i < options.length; i++) {
+      opt = options[i];
+  
+      if (opt.selected) {
+          console.log(opt.selected)
+        result.push(opt.value);
+      }
+    }
+    return result;
+  }
+
 
 
 let cantidadVentas = (sucursal) =>{
