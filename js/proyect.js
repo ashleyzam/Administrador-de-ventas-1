@@ -67,13 +67,13 @@ let obtenerPreciosSumados =(productos)=>{
     let acumuladorDePrecios = 0
     for(let i = 0; i < productos.length; i++){
         for(let a = 0 ; a < precios.length; a++){
-            if(productos[i] === precios[a][0]){
-                //console.log(precios[a][1])
-                    acumuladorDePrecios+=precios[a][1]
-            }}}return acumuladorDePrecios;
+            productos[i] === precios[a][0] ? acumuladorDePrecios+=precios[a][1] : false
+            //console.log(precios[a][1])               
+        }
+    }   return acumuladorDePrecios;
 }
 
-//FUNCIÓN PARA CARGAR DATOS DEL ARRAY VENTAS
+// FUNCIÓN PARA CARGAR DATOS DEL ARRAY VENTAS
 let cargarVentas = (arrVentas) => {
     //console.log(table)
 let str = `<tr>
@@ -142,6 +142,8 @@ let cargarComponentes = () =>{
 }
 
 cargarComponentes()
+
+// FUNCIÓN EN LA QUE ITERO EL ARRAY VENDEDORAS PARA CARGARLAS EN MI SELECT DE LA MODAL NUEVA VENTA
 let cargarVendedoras = () =>{
     for(let i = 0 ; i < vendedoras.length; i ++){
         const listaVendedoras = document.createElement('option')
@@ -157,6 +159,7 @@ let cargarVendedoras = () =>{
 
 cargarVendedoras()
 
+// FUNCIÓN PARA CARGAR SUCURSALES EN MI SELECT DE LA MODAL NUEVTA VENTA
 let cargarSucursal = () =>{
     //for(let i = 0; i < ventas.length; i++){
         let listaSucursal = document.createElement('option')
@@ -165,21 +168,20 @@ let cargarSucursal = () =>{
         listaSucursal1.innerText = "Centro"      
         selectSucursal.appendChild(listaSucursal)
         selectSucursal.appendChild(listaSucursal1)
-        
 
-    //}
 }
 
 cargarSucursal()
 
 
-let getDate = document.querySelector('#fecha-nueva-venta')
 
+let getDate = document.querySelector('#fecha-nueva-venta')
 
 //btnSave.setAttribute("disabled", "disabled");
 
 let getDateTime = document.querySelector('#fecha-nueva-venta')
-  
+
+// FUNCIÓN PARA GUARDAR LOS VALORES DE MIS INPUTS Y SELECT/OPTIONS
 let saveData = () =>{
     let componentes = getSelectComponentValues(selectComponentes)
     let fecha =  getDateTime.value
@@ -191,14 +193,15 @@ let saveData = () =>{
         alert(`${componentes}, ${fecha}, ${vendedora} y ${sucursal} han sido guardados correctamente`)    
     }
 }
-    
+// FUNCIÓN PARA VALIDAR LOS VALORES DE MIS ITEMS    
 let validateAllItems = (comp,fec,vend,suc) =>{
      return (comp.length == 0 || fec == ""  || vend == "" || suc == "")
 }
-
-btnSave.addEventListener('click', (e) =>{
+// EVENTO PARA GUARDAR DATOS
+btnSave.addEventListener('click', () =>{
     saveData()
 })
+// FUNCIÓN PARA TRAER EL VALOR DE LOS SELECTS
 let getSelectComponentValues = (select) => {
     let result = [];
     let options = select && select.options;
@@ -206,11 +209,10 @@ let getSelectComponentValues = (select) => {
   
     for (let i=0 ; i < options.length; i++) {
       opt = options[i];
-  
-      if (opt.selected) {
+        opt.selected ? result.push(opt.value) : false
           console.log(opt.selected)
-        result.push(opt.value);
-      }
+       
+      
     }
     return result;
   }
@@ -220,10 +222,8 @@ let getSelectComponentValues = (select) => {
 let cantidadVentas = (sucursal) =>{
     let totalVentas = 0
     ventas.filter(venta =>{
-        if(venta[3] === sucursal){
-            totalVentas+=obtenerPreciosSumados(venta[4])
-    
-        }       
+        venta[3] === sucursal ? totalVentas += obtenerPreciosSumados(venta[4]) : false            
+            
     })
     return totalVentas
 }
@@ -236,8 +236,6 @@ let cargarVentasPorSucursal=()=>{
 }
 
 cargarVentasPorSucursal()
-
-
 
 let limpiarTabla = () => {
     table.innerHTML  = ""
