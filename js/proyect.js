@@ -214,7 +214,7 @@ let getSelectComponentValues = (select) => {
     }
     return result;
   }
-
+  
 
 
 let cantidadVentas = (sucursal) =>{
