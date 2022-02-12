@@ -2,6 +2,7 @@ const open = document.querySelector('.btn')
 const modalContains = document.querySelector('.modal-container')
 const modalPrincipal = document.querySelector('.containermodal-newSale')
 const close = document.querySelector('.close')
+const modalChange = document.querySelector('.modal')
 const selectOption = document.querySelector('.select-option')
 const btnSave = document.querySelector('#btn-save')
 const table = document.querySelector('.col1')//.getElementsByTagName('tbody')[0]
@@ -128,12 +129,91 @@ acceptDeleteBtn.addEventListener('click', e =>{
 const selectComponentes = document.querySelector('.select-componentes')
 let cargarComponentes = () =>{
     for(let i = 0; i < precios.length; i++){
-        const listaComponentes = document.createElement('option')
+        let listaComponentes = document.createElement('option')
+            listaComponentes.classList.add('seleccionar-componentes')
+            listaComponentes.setAttribute('value', `${precios[i][0]}`)
+            //console.log(listaComponentes)
             listaComponentes.innerText =`${precios[i][0]}`
              selectComponentes.appendChild(listaComponentes)
+             
     }
 }
+
 cargarComponentes()
+let cargarVendedoras = () =>{
+    for(let i = 0 ; i < vendedoras.length; i ++){
+        const listaVendedoras = document.createElement('option')
+        listaVendedoras.classList.add('seleccion-de-vendedoras')
+        //listaVendedoras.setAttribute('value',`${vendedoras[i]}`)
+        //listaVendedoras.setAttribute('id',`${vendedoras[i]}`)
+        listaVendedoras.innerText = `${vendedoras[i]}`
+        selectOption.appendChild(listaVendedoras)
+        
+
+    }
+}
+
+cargarVendedoras()
+let selectSucursal = document.querySelector('.single-select')
+let cargarSucursal = () =>{
+    for(let i = 0; i < ventas.length; i++){
+        let listaSucursal = document.createElement('option')
+        listaSucursal.innerText = `${ventas[i][3]}`
+        selectSucursal.appendChild(listaSucursal)
+    }
+}
+console.log(cargarSucursal())
+cargarSucursal()
+
+let validateSelect = document.querySelector('.seleccionar-componentes')
+let validateInput = document.querySelector('#fecha-nueva-venta')
+let validateVendedoras = document.querySelector('.seleccion-de-vendedoras')
+console.log(validateSelect)
+console.log(validateInput)
+console.log(validateVendedoras)
+let select_1, vendedoras_1, input_1
+btnSave.setAttribute("disabled", "disabled");
+
+let saveData = () =>{
+select_1 = validateSelect.value;
+input_1 = validateInput.value
+vendedoras_1 = validateVendedoras.value
+}
+
+let validateAllItems = () =>{
+    //let alerta = "<p>Datos Guardados Correctamente</p>"
+    if(validateSelect.value === select_1.value || validateInput.value === input_1.value  || validateVendedoras.value === vendedoras_1.value){
+        btnSave.removeAttribute('disabled','disabled')
+        
+    }else{
+        btnSave.setAttribute("disabled", "disabled")
+    }
+}
+
+btnSave.addEventListener('submit', (e) =>{
+    e.preventDefault
+    if(validateAllItems()){
+        saveData()
+    }else{
+        alert('Porfavor, complete todos los campos')
+    }
+
+})
+
+/*
+let limpiar = () =>{
+    for(let i = selectComponentes.length; i>=0; i-- ){
+        selectComponentes.remove(i)
+    }
+}*/
+
+/*
+let changeOption = () =>{
+ //console.log(selectComponentes)
+ 
+}
+selectComponentes.addEventListener('change', changeOption)*/
+
 
 let cantidadVentas = (sucursal) =>{
     let totalVentas = 0
@@ -155,19 +235,7 @@ let cargarVentasPorSucursal=()=>{
 
 cargarVentasPorSucursal()
 
-let cargarVendedoras = () =>{
-    for(let i = 0 ; i < vendedoras.length; i ++){
-        const listaVendedoras = document.createElement('option')
-        //listaVendedoras.setAttribute('value',`${vendedoras[i]}`)
-        //listaVendedoras.setAttribute('id',`${vendedoras[i]}`)
-        listaVendedoras.innerText = `${vendedoras[i]}`
-        selectOption.appendChild(listaVendedoras)
-        
 
-    }
-}
-
-cargarVendedoras()
 
 let limpiarTabla = () => {
     table.innerHTML  = ""
